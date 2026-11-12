@@ -87,3 +87,127 @@ button {
 ::selection {
   background: rgba(202, 115, 88, 0.3);
 }
+
+/* ───────── 처음 접속 인트로 (별이 반짝이는 밤하늘 → 다리 아치 → 로고) ───────── */
+.intro-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  background:
+    radial-gradient(60% 50% at 50% 55%, rgba(48, 98, 120, 0.55) 0%, transparent 70%),
+    radial-gradient(40% 40% at 70% 30%, rgba(202, 115, 88, 0.22) 0%, transparent 70%),
+    linear-gradient(180deg, #050d14 0%, #0a1c28 60%, #10303d 100%);
+  animation: intro-out 0.8s ease-in 3.9s forwards;
+}
+
+.intro-stars span {
+  position: absolute;
+  border-radius: 9999px;
+  background: #fff7ea;
+  opacity: 0;
+  animation: star-twinkle 3.2s ease-in-out infinite;
+}
+
+.intro-center {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  animation: intro-zoom 4.5s ease-out both;
+}
+
+/* 아치가 왼쪽에서 오른쪽으로 그려진다 */
+.logo-arc {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.6s cubic-bezier(0.6, 0, 0.2, 1) 0.5s forwards;
+}
+.logo-deck {
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+  animation: draw-deck 1s ease-out 1.5s forwards;
+}
+.logo-ties {
+  opacity: 0;
+  animation: fade-in 0.8s ease-out 1.9s forwards;
+}
+.logo-spark {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: spark-pop 1s cubic-bezier(0.2, 1.4, 0.4, 1) 2.1s forwards;
+}
+
+.intro-title {
+  margin-top: 8px;
+  font-family: var(--font-ui-display);
+  font-weight: 600;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  letter-spacing: 0.42em;
+  padding-left: 0.42em; /* 글자 사이 간격 때문에 한쪽으로 쏠리는 것을 맞춘다 */
+  color: transparent;
+  background: linear-gradient(100deg, #cfe9ea 20%, #fff7ea 45%, #ee9b7d 55%, #cfe9ea 80%) 200% 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0;
+  animation:
+    fade-in 1s ease-out 2.3s forwards,
+    sheen 1.8s ease-in-out 2.6s forwards;
+}
+.intro-sub {
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: rgba(245, 237, 228, 0.7);
+  opacity: 0;
+  animation: fade-in 1s ease-out 2.7s forwards;
+}
+.intro-skip {
+  position: absolute;
+  bottom: 28px;
+  font-size: 0.75rem;
+  color: rgba(245, 237, 228, 0.4);
+  opacity: 0;
+  animation: fade-in 1s ease-out 1s forwards;
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes draw-deck {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes fade-in {
+  to { opacity: 1; }
+}
+@keyframes spark-pop {
+  0% { opacity: 0; transform: scale(0) rotate(-45deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes sheen {
+  to { background-position: -50% 0; }
+}
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  50% { opacity: 0.9; transform: scale(1.2); }
+}
+@keyframes intro-zoom {
+  from { transform: scale(0.92); }
+  to { transform: scale(1.04); }
+}
+@keyframes intro-out {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+/* 움직임 줄이기 설정이면 인트로를 건너뛴다 */
+@media (prefers-reduced-motion: reduce) {
+  .intro-splash {
+    display: none;
+  }
+}

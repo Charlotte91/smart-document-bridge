@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import type { Workbook } from "exceljs";
 import Header from "./Header";
+import IntroSplash from "./IntroSplash";
 import StepCard from "./StepCard";
 import FileDropZone, { type LoadedFileInfo } from "./step1/FileDropZone";
 import CodeInput from "./step2/CodeInput";
@@ -127,6 +128,7 @@ export default function BridgeApp() {
 
   return (
     <div className="flex flex-1 flex-col">
+      <IntroSplash />
       <Header />
 
       <main className="relative z-10 mx-auto -mt-12 grid w-full max-w-6xl flex-1 grid-cols-1 gap-6 px-6 pb-12 lg:grid-cols-2">

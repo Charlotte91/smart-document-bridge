@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { FlaskConical, Loader2, ShieldCheck } from "lucide-react";
+import BridgeLogo from "./BridgeLogo";
 import { createDummyWorkbookBuffer, DUMMY_FILE_NAME } from "@/lib/excel/dummy";
 import { downloadBlob } from "@/lib/file";
 
@@ -29,6 +30,7 @@ export default function Header() {
   return (
     <header className="window-glow text-cream">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 pb-20 pt-10 text-center">
+        <BridgeLogo size={96} />
         <h1 className="text-3xl font-semibold tracking-tight sm:text-[2.6rem] sm:leading-tight">
           스마트 문서/데이터 경량화 브릿지{" "}
           <span className="align-middle text-sm font-normal text-cream/70">(PoC)</span>
