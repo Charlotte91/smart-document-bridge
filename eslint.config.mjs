@@ -9,6 +9,9 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    // 폐쇄망 반출 묶음·휴지통 폴더에는 빌드 결과물 사본이 들어 있어 검사하지 않는다
+    "offline-dist/**",
+    "trash-can/**",
     "out/**",
     "build/**",
     "next-env.d.ts",

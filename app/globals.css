@@ -11,6 +11,8 @@
   --cream: #f5ede4;
   /* 애플 디자인 사이트와 같은 방식: 기기에 들어 있는 시스템 글꼴(맥·아이폰은 SF Pro, 한글은 Apple SD Gothic Neo).
      SF Pro 파일은 라이선스상 직접 올릴 수 없어, 각 기기의 시스템 글꼴을 그대로 쓴다. */
+  /* 코드 입력창 글꼴: 웹 글꼴을 내려받지 않고 기기에 있는 고정폭 글꼴을 쓴다(폐쇄망에서도 동일) */
+  --font-code: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "D2Coding", monospace;
   --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", "Segoe UI", Roboto, sans-serif;
   --font-ui-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", "Segoe UI", Roboto, sans-serif;
 }
@@ -23,7 +25,7 @@
   --color-accent: var(--accent);
   --color-cream: var(--cream);
   --font-sans: var(--font-ui);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: var(--font-code);
 }
 
 body {

@@ -40,6 +40,8 @@ const commonHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // 폐쇄망 배포용: node server.js 하나로 돌아가는 독립 실행 묶음(.next/standalone)을 만든다. Vercel 배포에는 영향 없다.
+  output: "standalone",
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,

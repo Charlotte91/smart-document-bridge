@@ -24,7 +24,9 @@ npm run lint --silent
 npx tsc --noEmit
 
 step "2/5 커밋 전 비밀 점검"
-git add -A
+# 사용자가 따로 만든 발표 자료(.pptx)는 허락 없이 공개 저장소에 올리지 않는다
+git add -A -- . ':(exclude)*.pptx'
+if git status --porcelain | grep -E '\.pptx$' >/dev/null; then echo "(올리지 않고 제외한 파일: $(git status --porcelain | grep -E '\.pptx$' | wc -l | tr -d ' ')개 .pptx)"; fi
 if git diff --cached --name-only | grep -iE '(^|/)\.env|node_modules/|^\.claude/|^\.bkit/|^\.vercel/|trash-can/'; then
   echo "올라가면 안 되는 파일이 포함되어 중단합니다 (위 목록)"; git reset -q; exit 1
 fi

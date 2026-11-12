@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "ship": "bash scripts/ship.sh"
+    "ship": "bash scripts/ship.sh",
+    "pack:offline": "next build && node scripts/pack-offline.mjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0",

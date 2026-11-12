@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "스마트 문서/데이터 경량화 브릿지",
@@ -17,7 +11,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ko"
-      className={`${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
