@@ -206,6 +206,39 @@ button {
 }
 
 /* 움직임 줄이기 설정이면 인트로를 건너뛴다 */
+/* 헤더 제목: 인트로의 SMART BRIDGE와 같은 글자 모양(넓은 자간 + 청록→크림→테라코타 그라데이션 + 빛 훑기) */
+.brand-title {
+  font-family: var(--font-ui-display);
+  font-weight: 600;
+  font-size: clamp(1.35rem, 4.2vw, 2.15rem);
+  line-height: 1.3;
+  letter-spacing: 0.22em;
+  padding-left: 0.22em; /* 자간 때문에 한쪽으로 쏠리는 것을 맞춘다 */
+  color: transparent;
+  background: linear-gradient(100deg, #cfe9ea 20%, #fff7ea 45%, #ee9b7d 55%, #cfe9ea 80%) 200% 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-wrap: balance;
+}
+.brand-sub {
+  margin-top: -4px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  padding-left: 0.3em;
+  color: rgba(245, 237, 228, 0.65);
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* 인트로가 끝나는 때(약 4.5초)에 맞춰 빛이 한 번 훑고 지나간다 */
+  .brand-title {
+    animation: sheen 2s ease-in-out 4.4s both;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-title {
+    background-position: 50% 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .intro-splash {
     display: none;
