@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 지울 파일을 임시로 옮겨 두는 폴더 (사용자가 직접 확인 후 삭제)
+/trash-can/
+
+# 빌드 때마다 node_modules에서 복사되는 exceljs 사본 (Worker가 사용)
+/public/vendor/
+
+# bkit 작업 기록(내 PC 경로 등이 들어 있음)
+/.bkit/
+
+# Claude Code 로컬 설정·작업 메모(내 PC 경로 등이 들어 있음)
+/.claude/

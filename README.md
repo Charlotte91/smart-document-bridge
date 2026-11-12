@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 스마트 문서/데이터 경량화 브릿지 (PoC)
 
-## Getting Started
+대용량 엑셀을 **내 PC 브라우저 안에서만** 읽어 구조와 개인정보를 가린 샘플 3줄만 뽑아 **사내 AI용 프롬프트**를 만들고, 사내 AI가 돌려준 가공 코드(JavaScript)를 **브라우저 안의 격리된 공간(Web Worker)** 에서 실행해 결과 엑셀을 만들어 주는 웹 앱입니다.
 
-First, run the development server:
+> 원본 파일은 서버로 보내지 않습니다. 이 앱에는 서버(API) 코드가 없고, 파일 읽기·마스킹·코드 실행·결과 생성이 모두 브라우저 안에서 일어납니다.
+
+## 이런 문제를 풀어요
+
+사내 AI에 엑셀을 가공시키려면 파일을 통째로 올려야 하는 것이 부담입니다(개인정보, 용량). 이 앱은 **구조와 가린 샘플만 담은 1만 자 이하 프롬프트**를 만들어 주고, AI가 짜 준 코드는 **로컬에서** 안전하게 실행해 결과 파일을 만듭니다.
+
+## 주요 기능
+
+**Step 1 — 로컬 경량화 + 프롬프트 생성**
+- `.xlsx`(20MB까지)를 끌어 놓거나 선택하면 모든 시트의 이름·컬럼명·샘플 3줄을 추출
+- 이름·전화번호·주민번호·이메일 자동 가림(예: 김철수 → 김\*\*), 가린 샘플 미리보기
+- 한글 파일명·시트명·칸 내용을 NFC로 정리해 자소 분리 방지
+- 용량 경량화 배지(원본 대비 프롬프트 감소율) — 시연 파일 기준 약 99%
+- 작업 지시 입력, 예시 10건 버튼, 프롬프트 직접 수정, 클립보드 복사
+
+**Step 2 — AI 코드 실행 + 결과 다운로드**
+- AI가 준 코드를 붙여 넣으면 ```` ``` ```` 표시·설명 문장을 자동 정리
+- 결과 시트 탭 미리보기(배경색·글자색 반영)와 `최종_가공완료_보고서.xlsx` 다운로드
+- 원본 시트가 바뀌었는지 실행 전후 비교·경고, 결과 파일의 외부 연결 수식·링크 경고
+- 결과 파일의 한글이 깨지지 않도록 새 시트에 한글 글꼴 지정
+
+**시연용 더미 엑셀** — 버튼 한 번으로 5,000행 민원처리현황 파일(실제 규칙을 따르는 가짜 주민등록번호 포함)을 브라우저에서 만들어 내려받습니다.
+
+## 안전장치 (AI 코드 실행)
+
+1. 실행 전 **금지어 검사**(fetch·eval·import 등)
+2. 화면과 분리된 **Web Worker**에서 실행, 통신 함수·저장소·동적 실행 통로 제거
+3. **시간 제한**(코드 10초, 준비·쓰기 각 30초)
+4. **CSP**로 외부 통신 차단(Worker는 `connect-src 'none'`), 보안 헤더 적용
+
+점검 결과는 [CHECK.md](CHECK.md)에 있습니다.
+
+## 기술 스택
+
+Next.js 16(App Router) · React 19 · TypeScript · Tailwind CSS 4 · [exceljs](https://github.com/exceljs/exceljs) · lucide-react · Vercel 배포
+
+## 실행 방법
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # 개발 서버 http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+npm run build    # 배포용 빌드
+npm run start    # 빌드 결과 실행
+npm run lint     # 코드 검사
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+속도·보안 정책을 확인할 때는 개발 모드가 아니라 `build` + `start` 상태에서 확인하세요.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 문서
 
-## Learn More
+| 문서 | 내용 |
+|---|---|
+| [PRD.md](PRD.md) | 기획서: 문제·목표·기능·범위·보안 |
+| [PLAN.md](PLAN.md) | 계획서: 성공 기준, 작업 순서, 점검 결과 |
+| [DESIGN.md](DESIGN.md) | 설계서: 화면·데이터 흐름·보안 설계 |
+| [CHECK.md](CHECK.md) | 성공 기준·보안 점검 결과와 남은 항목 |
 
-To learn more about Next.js, take a look at the following resources:
+## 알려 둔 한계
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 마스킹은 정해진 패턴으로 찾는 방식이라 놓칠 수 있습니다. 이름 열이 아닌 칸의 이름, 주소·계좌번호 등은 가려지지 않으니 복사 전에 꼭 확인하세요.
+- 결과 엑셀은 가리지 않은 원본 데이터를 담습니다. 원본과 같은 수준으로 다루세요.
+- PoC이므로 `.xlsx`만, 20MB까지 지원합니다. 시연에는 앱이 만드는 가짜 데이터만 사용하세요.

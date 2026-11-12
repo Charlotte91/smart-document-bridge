@@ -1,26 +1,89 @@
 @import "tailwindcss";
 
+/* WindowSwap 느낌의 차분한 디자인: 깊은 청록 + 따뜻한 크림 + 테라코타 포인트, 둥근 알약 모양.
+   색은 여기서만 정하고 화면에서는 이름으로 쓴다. (이름 navy는 기존 코드 호환을 위해 그대로 두고 값만 청록으로 바꿨다) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4ece1; /* 따뜻한 크림 */
+  --foreground: #1b3340;
+  --navy: #1b3340; /* 깊은 청록 */
+  --panel: #fbf7f1; /* 카드 바탕 */
+  --accent: #ca7358; /* 테라코타 */
+  --cream: #f5ede4;
+  /* 애플 디자인 사이트와 같은 방식: 기기에 들어 있는 시스템 글꼴(맥·아이폰은 SF Pro, 한글은 Apple SD Gothic Neo).
+     SF Pro 파일은 라이선스상 직접 올릴 수 없어, 각 기기의 시스템 글꼴을 그대로 쓴다. */
+  --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", "Segoe UI", Roboto, sans-serif;
+  --font-ui-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", "Segoe UI", Roboto, sans-serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-navy: var(--navy);
+  --color-panel: var(--panel);
+  --color-accent: var(--accent);
+  --color-cream: var(--cream);
+  --font-sans: var(--font-ui);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-ui);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 제목: 애플처럼 굵기 600, 자간을 조금 더 좁게 */
+h1,
+h2,
+h3 {
+  font-family: var(--font-ui-display);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* 모든 버튼은 알약(둥근) 모양. 층(layer) 밖에 두어 개별 모서리 설정보다 우선한다 */
+button {
+  border-radius: 9999px;
+}
+
+/* 윈도 불빛처럼 번지는 따뜻한 빛 (헤더 배경) */
+.window-glow {
+  background:
+    radial-gradient(60% 120% at 15% 0%, rgba(202, 115, 88, 0.55) 0%, transparent 60%),
+    radial-gradient(50% 100% at 85% 10%, rgba(232, 190, 120, 0.4) 0%, transparent 60%),
+    radial-gradient(70% 90% at 50% 120%, rgba(90, 140, 160, 0.45) 0%, transparent 70%),
+    #1b3340;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .window-glow {
+    background-size: 140% 140%, 140% 140%, 140% 140%, auto;
+    animation: glow-drift 18s ease-in-out infinite alternate;
+  }
+  @keyframes glow-drift {
+    from { background-position: 0% 0%, 100% 0%, 50% 100%, 0 0; }
+    to { background-position: 20% 10%, 80% 20%, 40% 90%, 0 0; }
+  }
+}
+
+/* 카드가 부드럽게 떠오르며 나타난다 */
+@media (prefers-reduced-motion: no-preference) {
+  .step-card {
+    animation: card-in 0.6s ease-out both;
+  }
+  .step-card:nth-of-type(2) {
+    animation-delay: 0.1s;
+  }
+  @keyframes card-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+::selection {
+  background: rgba(202, 115, 88, 0.3);
 }
