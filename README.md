@@ -53,6 +53,10 @@ npm run start    # 빌드 결과 실행
 npm run lint     # 코드 검사
 ```
 
+```bash
+npm run ship -- "커밋 메시지"   # 검사 → 커밋 → GitHub 푸시 → Vercel 배포 → 배포 확인 (.env의 토큰 사용)
+```
+
 속도·보안 정책을 확인할 때는 개발 모드가 아니라 `build` + `start` 상태에서 확인하세요.
 
 ## 문서
