@@ -31,8 +31,10 @@ export default function Header() {
     <header className="window-glow text-cream">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 pb-20 pt-10 text-center">
         <BridgeLogo size={96} />
-        <h1 className="brand-title">스마트 문서/데이터 경량화 브릿지</h1>
-        <p className="brand-sub">PoC · PROOF OF CONCEPT</p>
+        <h1 className="brand-title" aria-label="스마트 문서/데이터 경량화 브릿지">
+          SMART BRIDGE
+        </h1>
+        <p className="brand-sub">문서·데이터 경량화 브릿지</p>
 
         {/* 흰 테두리 알약 안내문: WindowSwap의 입력창 모양 */}
         <p className="inline-flex items-center gap-2 rounded-full border border-cream/50 bg-white/5 px-5 py-2 text-sm text-cream/90 backdrop-blur-sm">
