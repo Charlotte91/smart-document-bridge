@@ -66,7 +66,7 @@
 ### 공개 전 필수 (배포 주소가 생기면 바로)
 1. **배포 응답 헤더 확인:** `curl -I https://<주소>/run-code.worker.js`, `/vendor/exceljs.min.js`, `/` 에 의도한 CSP와 보안 헤더가 붙었는지. (Worker 외부 통신 차단의 실제 방어선이라 가장 중요)
    - ✅ **로컬 운영 모드(`build` + `start`) 확인 완료:** 세 경로 모두 의도한 헤더가 붙음. `/`는 페이지 CSP(`connect-src 'self'`, `frame-ancestors 'none'`), `/run-code.worker.js`와 `/vendor/exceljs.min.js`는 Worker CSP(`default-src 'none'; connect-src 'none'; script-src 'self' 'unsafe-eval'`), 세 경로 모두 `nosniff`·`Referrer-Policy`·`Permissions-Policy`·`X-Frame-Options` 포함.
-   - ⏳ **남은 것:** 실제 Vercel 배포 주소에서 같은 `curl -I`를 한 번 더 확인(배포 환경이 헤더를 바꾸거나 빼지 않는지, HSTS 포함 여부).
+   - ✅ **Vercel 배포 주소(https://smart-document-bridge.vercel.app) 확인 완료:** 세 경로 모두 로컬과 같은 CSP·보안 헤더에 HSTS(`max-age=63072000`)까지 붙음. 배포 사이트에서 파일 읽기·마스킹·Worker 실행·외부 통신 차단도 동작 확인.
 2. **브라우저 4종(크롬·엣지·사파리·파이어폭스)에서 차단 시험:** `self["fe"+"tch"]("https://example.com")`가 실패하는지.
 3. **`npm audit --omit=dev` 재확인:** uuid 2건이 실제 영향 없는지 판단하고, exceljs 업데이트 가능 시점에 업그레이드 검토.
 
